@@ -1,0 +1,53 @@
+# <type>[optional scope][!]: <description>
+# 
+# [optional body]
+# 
+# [optional footer(s)]
+# 
+# Types:
+# - feat: A new feature
+# - fix: A bug fix
+# - docs: Documentation only changes
+# - style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+# - refactor: A code change that neither fixes a bug nor adds a feature
+# - perf: A code change that improves performance
+# - test: Adding missing tests or correcting existing tests
+# - build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+# - ci: Changes to our CI configuration files and scripts (example scopes: Circle, BrowserStack, SauceLabs)
+# - chore: Other changes that don't modify src or test files
+# - revert: Reverts a previous commit
+# 
+# Example commit messages:
+# 
+# 1.
+# feat(parser)!: add ability to parse arrays
+# 
+# A body is optional, but it's a good idea to provide more context.
+# 
+# BREAKING CHANGE:
+# Describe the breaking change and what needs to be changed by consumers of this code.
+#
+# 2.
+# feat: add email notifications on new direct messages
+#
+# 3.
+# feat(shopping cart): add the amazing button
+#
+# 4.
+# feat!: remove ticket list endpoint
+#
+# refers to JIRA-1337
+#
+# BREAKING CHANGES: ticket enpoints no longer supports list all entites.
+#
+# 5.
+# build: update dependencies
+#
+# 6.
+# build(release): bump version to 1.0.0
+#
+# 7.
+# refactor: implement fibonacci number calculation as recursion
+#
+# 8.
+#
