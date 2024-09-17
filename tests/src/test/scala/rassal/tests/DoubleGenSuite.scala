@@ -97,4 +97,33 @@ class DoubleGenSuite extends munit.FunSuite {
     val (_, obtained) = Gen.nextDouble.toFixed(4).run(Seed(1))
     assertEquals(obtained, expected)
   }
+
+  test("random list of double with Seed(1)") {
+    val expected =
+      List(0.41139034600928426, 0.7510961224325001, 0.2558267889544368, 0.5360936457291245, 1.7916224896907806e-4)
+    val (_, obtained) = Gen.nextDouble.asList(5).run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
+  test("random list of double as bounded that between [1, 5] with Seed(1)") {
+    val expected =
+      List(2.645561384037137, 4.0043844897300005, 2.023307155817747, 3.144374582916498, 1.0007166489958763)
+    val (_, obtained) = Gen.nextDouble.withBounds(1, 5).asList(5).run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
+  test("random list of double as inverted and bounded that between [1, 5] with Seed(1)") {
+    val expected =
+      List(-2.645561384037137, -4.0043844897300005, -2.023307155817747, -3.144374582916498, -1.0007166489958763)
+    val (_, obtained) = Gen.nextDouble.withBounds(1, 5).invert.asList(5).run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
+  test("random list of double as inverted, fixed, and bounded that between [1, 5] with Seed(1)") {
+    val expected =
+      List(-2.64, -4.00, -2.02, -3.14, -1.00)
+    val (_, obtained) = Gen.nextDouble.withBounds(1, 5).toFixed(2).invert.asList(5).run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
 }
