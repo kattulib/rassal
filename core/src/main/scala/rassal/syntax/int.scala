@@ -41,6 +41,7 @@ private[syntax] trait IntSyntax {
   }
 
   extension [P <: BoundP](self: Gen[Int, P]) {
+    @targetName("intAsList")
     def asList(length: Int)(using f: AsList[Int]): Gen[List[Int], P] = {
       f.asList(self)(length)
     }
