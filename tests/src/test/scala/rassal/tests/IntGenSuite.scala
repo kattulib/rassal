@@ -67,4 +67,22 @@ class IntGenSuite extends munit.FunSuite {
     val (_, obtained) = result.run(Seed(1))
     assertEquals(obtained, expected)
   }
+
+  test("random list of int with Seed(1)") {
+    val expected = List(-883454042, 1612966641, -549383847, -1151252339, 384748)
+    val (_, obtained) = Gen.nextInt.asList(5).run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
+  test("random list of int as bounded that between [1, 5] with Seed(1)") {
+    val expected = List(4, 2, 4, 2, 4)
+    val (_, obtained) = Gen.nextInt.withBounds(1, 5).asList(5).run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
+  test("random list of int as inverted and bounded that between [1, 5] with Seed(1)") {
+    val expected = List(-4, -2, -4, -2, -4)
+    val (_, obtained) = Gen.nextInt.withBounds(1, 5).invert.asList(5).run(Seed(1))
+    assertEquals(obtained, expected)
+  }
 }
