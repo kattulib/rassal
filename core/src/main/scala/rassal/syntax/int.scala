@@ -23,7 +23,7 @@ package rassal
 package syntax
 
 import scala.annotation.targetName
-import rassal.functions.{Boundable, Invertible}
+import rassal.functions.{AsList, Boundable, Invertible}
 
 private[syntax] trait IntSyntax {
   extension [P <: BoundP](self: Gen[Int, P]) {
@@ -37,6 +37,12 @@ private[syntax] trait IntSyntax {
     @targetName("intWithBounds")
     def withBounds(min: Int, max: Int)(using f: Boundable[Int]): Gen[Int, Bounded] = {
       f.withBounds(min, max)(self)
+    }
+  }
+
+  extension [P <: BoundP](self: Gen[Int, P]) {
+    def asList(length: Int)(using f: AsList[Int]): Gen[List[Int], P] = {
+      f.asList(self)(length)
     }
   }
 }
