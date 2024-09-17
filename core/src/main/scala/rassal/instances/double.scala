@@ -22,9 +22,15 @@
 package rassal
 package instances
 
-import functions.Invertible
+import functions.{Boundable, Invertible}
 
 private[instances] trait DoubleInstances {
+  given Boundable[Double] with {
+    def withBounds(min: Double, max: Double)(self: Gen[Double, Unbounded]): Gen[Double, Bounded] = {
+      self.map[Double, Bounded] { min + (max - min) * _ }
+    }
+  }
+
   given Invertible[Double] with {
     def invert[P <: BoundP](self: Gen[Double, P]): Gen[Double, P] = {
       self.map { -_ }
