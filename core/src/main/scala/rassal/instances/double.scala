@@ -22,7 +22,7 @@
 package rassal
 package instances
 
-import functions.{Boundable, Invertible}
+import functions.{AsList, Boundable, Invertible}
 
 private[instances] trait DoubleInstances {
   given Boundable[Double] with {
@@ -34,6 +34,15 @@ private[instances] trait DoubleInstances {
   given Invertible[Double] with {
     def invert[P <: BoundP](self: Gen[Double, P]): Gen[Double, P] = {
       self.map { -_ }
+    }
+  }
+
+  given AsList[Double] with {
+    def asList[P <: BoundP](self: Gen[Double, P])(length: Int): Gen[List[Double], P] = Gen { currentSeed =>
+      (0 until length).foldLeft((currentSeed, List.empty[Double])) { case ((runningSeed, acc), _) =>
+        val (nextSeed, v) = self.run(runningSeed)
+        (nextSeed, v +: acc)
+      }
     }
   }
 }
