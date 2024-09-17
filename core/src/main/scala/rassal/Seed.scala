@@ -21,7 +21,7 @@
 
 package rassal
 
-final case class Seed(initialValue: Long) {
+final private[rassal] case class Seed(initialValue: Long) {
   def next: (Seed, Int) = {
     val currentValue = (initialValue * 0x5deece66dL + 0xbL) & 0xffffffffffffL
     val nextState = Seed(currentValue)
