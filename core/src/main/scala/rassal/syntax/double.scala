@@ -23,7 +23,7 @@ package rassal
 package syntax
 
 import scala.annotation.targetName
-import rassal.functions.{Boundable, Invertible}
+import rassal.functions.{AsList, Boundable, Invertible}
 
 private[syntax] trait DoubleSyntax {
   extension [P <: BoundP](self: Gen[Double, P]) {
@@ -49,6 +49,13 @@ private[syntax] trait DoubleSyntax {
           BigDecimal.RoundingMode.FLOOR
         )
         .toDouble
+    }
+  }
+
+  extension [P <: BoundP](self: Gen[Double, P]) {
+    @targetName("doubleAsList")
+    def asList(length: Int)(using f: AsList[Double]): Gen[List[Double], P] = {
+      f.asList(self)(length)
     }
   }
 }
