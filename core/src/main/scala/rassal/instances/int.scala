@@ -22,18 +22,27 @@
 package rassal
 package instances
 
-import functions.{Boundable, Invertible}
+import functions.{AsList, Boundable, Invertible}
 
 private[instances] class IntInstances {
   given Boundable[Int] with {
     def withBounds(min: Int, max: Int)(self: Gen[Int, Unbounded]): Gen[Int, Bounded] = {
-      self.map[Int, Bounded] { _ % (max - min + 1) + min }
+      self.map[Int, Bounded] { Math.floorMod(_, max - min + 1) + min }
     }
   }
 
   given Invertible[Int] with {
     def invert[P <: BoundP](self: Gen[Int, P]): Gen[Int, P] = {
       self.map { -_ }
+    }
+  }
+
+  given AsList[Int] with {
+    def asList[P <: BoundP](self: Gen[Int, P])(length: Int): Gen[List[Int], P] = Gen { currentSeed =>
+      (0 until length).foldLeft((currentSeed, List.empty[Int])) { case ((runningSeed, acc), _) =>
+        val (nextSeed, v) = self.run(runningSeed)
+        (nextSeed, v +: acc)
+      }
     }
   }
 }
