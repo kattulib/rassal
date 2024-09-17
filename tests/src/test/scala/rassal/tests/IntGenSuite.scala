@@ -34,7 +34,7 @@ class IntGenSuite extends munit.FunSuite {
 
   test("random int value as bounded between [1, 100] with Seed(1)") {
     val expected = 49
-    val (_, obtained) = Gen.nextInt.withbounds(1, 100).run(Seed(1))
+    val (_, obtained) = Gen.nextInt.withBounds(1, 100).run(Seed(1))
     assertEquals(obtained, expected)
   }
 
@@ -52,7 +52,7 @@ class IntGenSuite extends munit.FunSuite {
 
   test("random int value as inverted and bounded that between [1, 100] with Seed(1)") {
     val expected = -49
-    val (_, obtained) = Gen.nextInt.withbounds(1, 100).invert.run(Seed(1))
+    val (_, obtained) = Gen.nextInt.withBounds(1, 100).invert.run(Seed(1))
     assertEquals(obtained, expected)
   }
 
