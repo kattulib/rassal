@@ -44,12 +44,48 @@ class DoubleGenSuite extends munit.FunSuite {
     assertEquals(obtained, expected)
   }
 
+  test("random double value as bounded that between [0.332, 0.355] with Seed(1)") {
+    val expected = 0.3320041207317263
+    val (_, obtained) = Gen.nextDouble.withBounds(0.332, 0.355).run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
+  test("random double value as inverted and bounded that between [0.332, 0.355] with Seed(1)") {
+    val expected = -0.3320041207317263
+    val (_, obtained) = Gen.nextDouble.withBounds(0.332, 0.355).invert.run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
   test("random double values with for-comprehension, and with Seed(1)") {
     val expected = (1.7916224896907806e-4, 0.5360936457291245, 0.2558267889544368)
     val result = for {
       a <- Gen.nextDouble
       b <- Gen.nextDouble
       c <- Gen.nextDouble
+    } yield (a, b, c)
+
+    val (_, obtained) = result.run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
+  test("random double values as bounded with for-comprehension, and with Seed(1)") {
+    val expected = (0.10001791622489692, 0.25360936457291244, 0.3255826788954437)
+    val result = for {
+      a <- Gen.nextDouble.withBounds(0.1, 0.2)
+      b <- Gen.nextDouble.withBounds(0.2, 0.3)
+      c <- Gen.nextDouble.withBounds(0.3, 0.4)
+    } yield (a, b, c)
+
+    val (_, obtained) = result.run(Seed(1))
+    assertEquals(obtained, expected)
+  }
+
+  test("random double values as fixed to 4 decimal and bounded with for-comprehension, and with Seed(1)") {
+    val expected = (0.1000, 0.2536, 0.3255)
+    val result = for {
+      a <- Gen.nextDouble.withBounds(0.1, 0.2).toFixed(4)
+      b <- Gen.nextDouble.withBounds(0.2, 0.3).toFixed(4)
+      c <- Gen.nextDouble.withBounds(0.3, 0.4).toFixed(4)
     } yield (a, b, c)
 
     val (_, obtained) = result.run(Seed(1))
