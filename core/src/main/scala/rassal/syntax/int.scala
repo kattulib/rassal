@@ -35,7 +35,7 @@ private[syntax] trait IntSyntax {
 
   extension (self: Gen[Int, Unbounded]) {
     @targetName("intWithBounds")
-    def withbounds(min: Int, max: Int)(using f: Boundable[Int]): Gen[Int, Bounded] = {
+    def withBounds(min: Int, max: Int)(using f: Boundable[Int]): Gen[Int, Bounded] = {
       f.withBounds(min, max)(self)
     }
   }

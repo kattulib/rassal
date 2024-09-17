@@ -35,7 +35,7 @@ private[syntax] trait DoubleSyntax {
 
   extension (self: Gen[Double, Unbounded]) {
     @targetName("doubleWithBounds")
-    def withbounds(min: Double, max: Double)(using f: Boundable[Double]): Gen[Double, Bounded] = {
+    def withBounds(min: Double, max: Double)(using f: Boundable[Double]): Gen[Double, Bounded] = {
       f.withBounds(min, max)(self)
     }
   }
