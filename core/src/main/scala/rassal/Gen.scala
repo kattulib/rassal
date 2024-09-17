@@ -26,7 +26,13 @@ import kuram.data.State
 opaque type Gen[+A, P <: BoundP] = State[Seed, A]
 
 object Gen {
-  def nextInt: Gen[Int, Unbounded] = State { _.next }
+  def apply[A, P <: BoundP](instance: Seed => (Seed, A)): Gen[A, P] = State.apply(instance)
+
+  def lift[A, P <: BoundP](a: A): Gen[A, P] = State.lift(a)
+
+  def seed(initialValue: Long): Seed = Seed(initialValue)
+
+  def nextInt: Gen[Int, Unbounded] = Gen { _.next }
 
   def nextNonInt: Gen[Int, Unbounded] = nextInt.map { i =>
     if i < 0 then -(i + 1) else i
