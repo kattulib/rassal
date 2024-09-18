@@ -37,6 +37,14 @@ private[instances] trait DoubleInstances {
     }
   }
 
+  given doubleListInvertible: Invertible[List[Double]] with {
+    def invert[P <: BoundP](self: Gen[List[Double], P]): Gen[List[Double], P] = {
+      self.map { as =>
+        as.foldLeft(List.empty[Double])(_ :+ -_)
+      }
+    }
+  }
+
   given AsList[Double] with {
     def asList[P <: BoundP](self: Gen[Double, P])(length: Int): Gen[List[Double], P] = Gen { currentSeed =>
       (0 until length).foldLeft((currentSeed, List.empty[Double])) { case ((runningSeed, acc), _) =>

@@ -37,6 +37,14 @@ private[instances] class IntInstances {
     }
   }
 
+  given intListInvertible: Invertible[List[Int]] with {
+    def invert[P <: BoundP](self: Gen[List[Int], P]): Gen[List[Int], P] = {
+      self.map { as =>
+        as.foldLeft(List.empty[Int])(_ :+ -_)
+      }
+    }
+  }
+
   given AsList[Int] with {
     def asList[P <: BoundP](self: Gen[Int, P])(length: Int): Gen[List[Int], P] = Gen { currentSeed =>
       (0 until length).foldLeft((currentSeed, List.empty[Int])) { case ((runningSeed, acc), _) =>
