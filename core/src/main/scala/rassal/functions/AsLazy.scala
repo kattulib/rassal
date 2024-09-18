@@ -20,29 +20,8 @@
  */
 
 package rassal
-package instances
+package functions
 
-import functions.{AsLazy, AsList}
-import numeric.NumericInstances
-
-private[instances] trait AllInstances extends NumericInstances {
-  given [A]: AsList[A] with {
-    def asList[P <: BoundP](self: Gen[A, P])(length: Int): Gen[List[A], P] = Gen { currentSeed =>
-      (0 until length).foldLeft((currentSeed, List.empty[A])) { case ((runningSeed, acc), _) =>
-        val (nextSeed, v) = self.run(runningSeed)
-        (nextSeed, v +: acc)
-      }
-    }
-  }
-
-  given [A]: AsLazy[A] with {
-    def asLazy[P <: BoundP](self: Gen[A, P]): Gen[LazyList[A], P] = Gen { currentSeed =>
-      def loop(runningSeed: Seed): LazyList[A] = {
-        val (nextSeed, value) = self.run(runningSeed)
-        value #:: loop(nextSeed)
-      }
-
-      (currentSeed, loop(currentSeed))
-    }
-  }
+private[rassal] trait AsLazy[A] {
+  def asLazy[P <: BoundP](self: Gen[A, P]): Gen[LazyList[A], P]
 }

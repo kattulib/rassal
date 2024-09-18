@@ -23,7 +23,7 @@ package rassal
 package syntax
 
 import scala.annotation.targetName
-import functions.AsList
+import functions.{AsLazy, AsList}
 import numeric.NumericSyntax
 
 private[syntax] trait AllSyntax extends NumericSyntax {
@@ -31,6 +31,13 @@ private[syntax] trait AllSyntax extends NumericSyntax {
     @targetName("allAsList")
     def asList(length: Int)(using f: AsList[A]): Gen[List[A], P] = {
       f.asList(self)(length)
+    }
+  }
+
+  extension [A, P <: BoundP](self: Gen[A, P]) {
+    @targetName("allAsLazy")
+    def asLazy(using f: AsLazy[A]): Gen[LazyList[A], P] = {
+      f.asLazy(self)
     }
   }
 }
