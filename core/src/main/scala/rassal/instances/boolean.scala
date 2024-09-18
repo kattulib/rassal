@@ -20,8 +20,14 @@
  */
 
 package rassal
+package instances
 
-package object instances {
-  object all extends AllInstances
-  object boolean extends BooleanInstances
+import functions.Invertible
+
+private[instances] trait BooleanInstances {
+  given Invertible[Boolean] with {
+    def invert[P <: BoundP](self: Gen[Boolean, P]): Gen[Boolean, P] = {
+      self.map { !_ }
+    }
+  }
 }

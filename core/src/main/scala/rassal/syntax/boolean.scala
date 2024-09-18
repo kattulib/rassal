@@ -20,8 +20,16 @@
  */
 
 package rassal
+package syntax
 
-package object instances {
-  object all extends AllInstances
-  object boolean extends BooleanInstances
+import scala.annotation.targetName
+import functions.Invertible
+
+private[syntax] trait BooleanSyntax {
+  extension [P <: BoundP](self: Gen[Boolean, P]) {
+    @targetName("booleanInvert")
+    def invert(using f: Invertible[Boolean]): Gen[Boolean, P] = {
+      f.invert(self)
+    }
+  }
 }
