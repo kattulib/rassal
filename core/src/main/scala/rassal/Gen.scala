@@ -42,6 +42,10 @@ object Gen {
     i / (Int.MaxValue.toDouble + 1)
   }
 
+  def nextBoolean: Gen[Boolean, Unbounded] = nextInt.map { i =>
+    if i < 0 then false else true
+  }
+
   extension [A, P <: BoundP](self: Gen[A, P]) {
     def map[B, P2 <: BoundP](f: A => B): Gen[B, P2] = State.map(self)(f)
     def flatMap[B, P2 <: BoundP](f: A => Gen[B, P2]): Gen[B, P2] = State.flatMap(self)(f)
