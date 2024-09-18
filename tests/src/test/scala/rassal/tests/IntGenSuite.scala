@@ -93,4 +93,11 @@ class IntGenSuite extends munit.FunSuite {
     val (_, obtained) = Gen.nextInt.withBounds(1, 5).asList(5).invert.run(Seed(1))
     assertEquals(obtained, expected)
   }
+
+  test("random lazy list of int as bounded that between [1, 10] with Seed(1)") {
+    val expected = List(9, 2, 4, 2, 9)
+    val (_, lazyList) = Gen.nextInt.withBounds(1, 10).asLazy.run(Seed(1))
+    val obtained = lazyList.take(5).toList
+    assertEquals(obtained, expected)
+  }
 }

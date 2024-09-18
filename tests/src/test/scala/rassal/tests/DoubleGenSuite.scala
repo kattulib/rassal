@@ -134,4 +134,11 @@ class DoubleGenSuite extends munit.FunSuite {
     val (_, obtained) = Gen.nextDouble.withBounds(1, 5).toFixed(2).asList(5).invert.run(Seed(1))
     assertEquals(obtained, expected)
   }
+
+  test("random lazy list of double as bounded that between [1, 10] with Seed(1)") {
+    val expected = List(1.0016124602407217, 5.824842811562121, 3.302441100589931, 7.759865101892501, 4.702513114083558)
+    val (_, lazyList) = Gen.nextDouble.withBounds(1, 10).asLazy.run(Seed(1))
+    val obtained = lazyList.take(5).toList
+    assertEquals(obtained, expected)
+  }
 }
