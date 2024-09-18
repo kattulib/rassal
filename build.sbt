@@ -3,7 +3,7 @@ import Dependencies._
 /* project settings */
 ThisBuild / scalaVersion := "3.4.2"
 ThisBuild / name := "rassal"
-ThisBuild / version := "0.1.0-SNAPSHOT"
+ThisBuild / version := "0.1.1-SNAPSHOT"
 ThisBuild / organization := "io.github.kattulib"
 ThisBuild / organizationName := "kattulib"
 ThisBuild / description := "Say something about this template."
