@@ -33,6 +33,13 @@ private[syntax] trait IntSyntax {
     }
   }
 
+  extension [P <: BoundP](self: Gen[List[Int], P]) {
+    @targetName("intListInvert")
+    def invert(using f: Invertible[List[Int]]): Gen[List[Int], P] = {
+      f.invert(self)
+    }
+  }
+
   extension (self: Gen[Int, Unbounded]) {
     @targetName("intWithBounds")
     def withBounds(min: Int, max: Int)(using f: Boundable[Int]): Gen[Int, Bounded] = {

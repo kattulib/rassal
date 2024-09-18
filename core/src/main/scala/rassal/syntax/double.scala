@@ -33,6 +33,13 @@ private[syntax] trait DoubleSyntax {
     }
   }
 
+  extension [P <: BoundP](self: Gen[List[Double], P]) {
+    @targetName("doubleListInvert")
+    def invert(using f: Invertible[List[Double]]): Gen[List[Double], P] = {
+      f.invert(self)
+    }
+  }
+
   extension (self: Gen[Double, Unbounded]) {
     @targetName("doubleWithBounds")
     def withBounds(min: Double, max: Double)(using f: Boundable[Double]): Gen[Double, Bounded] = {
