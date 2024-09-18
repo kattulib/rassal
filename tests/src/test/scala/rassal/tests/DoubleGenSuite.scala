@@ -126,4 +126,12 @@ class DoubleGenSuite extends munit.FunSuite {
     assertEquals(obtained, expected)
   }
 
+  test(
+    "random list of double as inverted which after the creation of list, fixed, and bounded that between [1, 5] with Seed(1)"
+  ) {
+    val expected =
+      List(-2.64, -4.00, -2.02, -3.14, -1.00)
+    val (_, obtained) = Gen.nextDouble.withBounds(1, 5).toFixed(2).asList(5).invert.run(Seed(1))
+    assertEquals(obtained, expected)
+  }
 }
