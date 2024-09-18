@@ -22,35 +22,8 @@
 package rassal
 package instances
 
-import functions.{AsList, Boundable, Invertible}
-
-private[instances] trait DoubleInstances {
-  given Boundable[Double] with {
-    def withBounds(min: Double, max: Double)(self: Gen[Double, Unbounded]): Gen[Double, Bounded] = {
-      self.map[Double, Bounded] { min + (max - min) * _ }
-    }
-  }
-
-  given Invertible[Double] with {
-    def invert[P <: BoundP](self: Gen[Double, P]): Gen[Double, P] = {
-      self.map { -_ }
-    }
-  }
-
-  given doubleListInvertible: Invertible[List[Double]] with {
-    def invert[P <: BoundP](self: Gen[List[Double], P]): Gen[List[Double], P] = {
-      self.map { as =>
-        as.foldLeft(List.empty[Double])(_ :+ -_)
-      }
-    }
-  }
-
-  given AsList[Double] with {
-    def asList[P <: BoundP](self: Gen[Double, P])(length: Int): Gen[List[Double], P] = Gen { currentSeed =>
-      (0 until length).foldLeft((currentSeed, List.empty[Double])) { case ((runningSeed, acc), _) =>
-        val (nextSeed, v) = self.run(runningSeed)
-        (nextSeed, v +: acc)
-      }
-    }
-  }
+package object numeric {
+  object all extends NumericInstances
+  object int extends IntInstances
+  object double extends DoubleInstances
 }

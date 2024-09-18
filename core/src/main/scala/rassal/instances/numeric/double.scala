@@ -20,7 +20,14 @@
  */
 
 package rassal
+package instances.numeric
 
-package object instances {
-  object all extends AllInstances
+import functions.{Boundable}
+
+private[instances] trait DoubleInstances {
+  given Boundable[Double] with {
+    def withBounds(min: Double, max: Double)(self: Gen[Double, Unbounded]): Gen[Double, Bounded] = {
+      self.map[Double, Bounded] { min + (max - min) * _ }
+    }
+  }
 }

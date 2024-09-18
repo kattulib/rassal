@@ -22,6 +22,16 @@
 package rassal
 package instances
 
-private[instances] trait AllInstances
-    extends IntInstances
-    with DoubleInstances
+import functions.AsList
+import numeric.NumericInstances
+
+private[instances] trait AllInstances extends NumericInstances {
+  given [A]: AsList[A] with {
+    def asList[P <: BoundP](self: Gen[A, P])(length: Int): Gen[List[A], P] = Gen { currentSeed =>
+      (0 until length).foldLeft((currentSeed, List.empty[A])) { case ((runningSeed, acc), _) =>
+        val (nextSeed, v) = self.run(runningSeed)
+        (nextSeed, v +: acc)
+      }
+    }
+  }
+}

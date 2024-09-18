@@ -20,7 +20,22 @@
  */
 
 package rassal
+package instances.numeric
 
-package object instances {
-  object all extends AllInstances
+import functions.Invertible
+
+private[instances] trait NumericInstances extends IntInstances with DoubleInstances {
+  given [A: Numeric]: Invertible[A] with {
+    def invert[P <: BoundP](self: Gen[A, P]): Gen[A, P] = {
+      self.map { a => Numeric[A].negate(a) }
+    }
+  }
+
+  given [A: Numeric]: Invertible[List[A]] with {
+    def invert[P <: BoundP](self: Gen[List[A], P]): Gen[List[A], P] = {
+      self.map { as =>
+        as.foldLeft(List.empty[A])((acc, a) => acc :+ Numeric[A].negate(a))
+      }
+    }
+  }
 }

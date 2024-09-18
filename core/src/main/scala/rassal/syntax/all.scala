@@ -22,4 +22,15 @@
 package rassal
 package syntax
 
-private[syntax] trait AllSyntax extends IntSyntax with DoubleSyntax
+import scala.annotation.targetName
+import functions.AsList
+import numeric.NumericSyntax
+
+private[syntax] trait AllSyntax extends NumericSyntax {
+  extension [A, P <: BoundP](self: Gen[A, P]) {
+    @targetName("allAsList")
+    def asList(length: Int)(using f: AsList[A]): Gen[List[A], P] = {
+      f.asList(self)(length)
+    }
+  }
+}

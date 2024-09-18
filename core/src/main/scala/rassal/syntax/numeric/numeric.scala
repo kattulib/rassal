@@ -20,7 +20,23 @@
  */
 
 package rassal
+package syntax.numeric
 
-package object instances {
-  object all extends AllInstances
+import scala.annotation.targetName
+import rassal.functions.Invertible
+
+private[syntax] trait NumericSyntax extends IntSyntax with DoubleSyntax {
+  extension [A: Numeric, P <: BoundP](self: Gen[A, P]) {
+    @targetName("numericInvert")
+    def invert(using f: Invertible[A]): Gen[A, P] = {
+      f.invert(self)
+    }
+  }
+
+  extension [A: Numeric, P <: BoundP](self: Gen[List[A], P]) {
+    @targetName("numericListInvert")
+    def invert(using f: Invertible[List[A]]): Gen[List[A], P] = {
+      f.invert(self)
+    }
+  }
 }

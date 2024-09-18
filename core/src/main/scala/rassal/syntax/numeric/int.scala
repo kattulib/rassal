@@ -20,37 +20,16 @@
  */
 
 package rassal
-package syntax
+package syntax.numeric
 
 import scala.annotation.targetName
-import rassal.functions.{AsList, Boundable, Invertible}
+import rassal.functions.{Boundable}
 
 private[syntax] trait IntSyntax {
-  extension [P <: BoundP](self: Gen[Int, P]) {
-    @targetName("intInvert")
-    def invert(using f: Invertible[Int]): Gen[Int, P] = {
-      f.invert(self)
-    }
-  }
-
-  extension [P <: BoundP](self: Gen[List[Int], P]) {
-    @targetName("intListInvert")
-    def invert(using f: Invertible[List[Int]]): Gen[List[Int], P] = {
-      f.invert(self)
-    }
-  }
-
   extension (self: Gen[Int, Unbounded]) {
     @targetName("intWithBounds")
     def withBounds(min: Int, max: Int)(using f: Boundable[Int]): Gen[Int, Bounded] = {
       f.withBounds(min, max)(self)
-    }
-  }
-
-  extension [P <: BoundP](self: Gen[Int, P]) {
-    @targetName("intAsList")
-    def asList(length: Int)(using f: AsList[Int]): Gen[List[Int], P] = {
-      f.asList(self)(length)
     }
   }
 }

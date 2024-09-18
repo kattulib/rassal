@@ -20,26 +20,12 @@
  */
 
 package rassal
-package syntax
+package syntax.numeric
 
 import scala.annotation.targetName
-import rassal.functions.{AsList, Boundable, Invertible}
+import rassal.functions.{Boundable}
 
 private[syntax] trait DoubleSyntax {
-  extension [P <: BoundP](self: Gen[Double, P]) {
-    @targetName("doubleInvert")
-    def invert(using f: Invertible[Double]): Gen[Double, P] = {
-      f.invert(self)
-    }
-  }
-
-  extension [P <: BoundP](self: Gen[List[Double], P]) {
-    @targetName("doubleListInvert")
-    def invert(using f: Invertible[List[Double]]): Gen[List[Double], P] = {
-      f.invert(self)
-    }
-  }
-
   extension (self: Gen[Double, Unbounded]) {
     @targetName("doubleWithBounds")
     def withBounds(min: Double, max: Double)(using f: Boundable[Double]): Gen[Double, Bounded] = {
@@ -56,13 +42,6 @@ private[syntax] trait DoubleSyntax {
           BigDecimal.RoundingMode.FLOOR
         )
         .toDouble
-    }
-  }
-
-  extension [P <: BoundP](self: Gen[Double, P]) {
-    @targetName("doubleAsList")
-    def asList(length: Int)(using f: AsList[Double]): Gen[List[Double], P] = {
-      f.asList(self)(length)
     }
   }
 }

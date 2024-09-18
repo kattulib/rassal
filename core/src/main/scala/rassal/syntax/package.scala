@@ -23,7 +23,5 @@ package rassal
 
 package object syntax {
   object all extends AllSyntax
-  object int extends IntSyntax
-  object double extends DoubleSyntax
 }
 
