@@ -60,3 +60,45 @@ val res3: (rassal.Seed, Double) = (Seed(25214903928),1.5)
 scala> Gen.nextDouble.withBounds(1.5, 4.2).toFixed(2).asList(3).run(Gen.seed(1))
 val res4: (rassal.Seed, List[Double]) = (Seed(245470556921330),List(2.19, 2.94, 1.5))
 ```
+
+## Examples
+Let's generate random string values
+```scala
+import rassal.Gen
+import rassal.syntax.all.*
+import rassal.instances.all.given
+
+val (_, stringList) = Gen.nextString.alpha.length(16).asList(10).run(Gen.seed(1))
+println(stringList)
+
+// output
+List(
+    mhuyKRzHUshsnalU,
+    IjUSLepdmlzqMscw,
+    SnjDFhbtRjqZodhl,
+    fLVOxnCJIpKgoPkS,
+    NjNgBWcgiOVLlqIi,
+    sZDRoxAnOxYIotPA,
+    idOfiTZWQdNSaPJn,
+    PlsjtDzHBVPUGCxe,
+    qscWotfqFElCdBJg,
+    dKCkfnSpMoZKhVJY
+)
+```
+
+Or we can use LazyList instead of List for better performance
+```scala
+val (_, stringLazyList) = Gen.nextString.alpha.length(16).asLazy.run(Gen.seed(1))
+
+for i <- stringLazyList.take(5) do {
+    println(i)
+}
+
+// output
+dKCkfnSpMoZKhVJY
+qscWotfqFElCdBJg
+PlsjtDzHBVPUGCxe
+idOfiTZWQdNSaPJn
+sZDRoxAnOxYIotPA
+```
+
