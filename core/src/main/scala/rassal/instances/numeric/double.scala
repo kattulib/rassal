@@ -26,8 +26,8 @@ import functions.{Boundable}
 
 private[instances] trait DoubleInstances {
   given Boundable[Double] with {
-    def withBounds(min: Double, max: Double)(self: Gen[Double, Unbounded]): Gen[Double, Bounded] = {
-      self.map[Double, Bounded] { min + (max - min) * _ }
+    def withBounds(min: Double, max: Double)(self: Gen[Double]): Gen[Double] = {
+      self.map { min + (max - min) * _ }
     }
   }
 }

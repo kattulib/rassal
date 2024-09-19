@@ -24,4 +24,6 @@ package rassal
 package object instances {
   object all extends AllInstances
   object boolean extends BooleanInstances
+  object string extends StringInstances
+
 }

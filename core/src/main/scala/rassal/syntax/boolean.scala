@@ -26,9 +26,9 @@ import scala.annotation.targetName
 import functions.Invertible
 
 private[syntax] trait BooleanSyntax {
-  extension [P <: BoundP](self: Gen[Boolean, P]) {
+  extension (self: Gen[Boolean]) {
     @targetName("booleanInvert")
-    def invert(using f: Invertible[Boolean]): Gen[Boolean, P] = {
+    def invert(using f: Invertible[Boolean]): Gen[Boolean] = {
       f.invert(self)
     }
   }

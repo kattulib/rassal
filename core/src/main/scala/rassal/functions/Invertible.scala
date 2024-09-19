@@ -23,5 +23,5 @@ package rassal
 package functions
 
 private[rassal] trait Invertible[A] {
-  def invert[P <: BoundP](self: Gen[A, P]): Gen[A, P]
+  def invert(self: Gen[A]): Gen[A]
 }

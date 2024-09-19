@@ -23,32 +23,34 @@ package rassal
 
 import kuram.data.State
 
-opaque type Gen[+A, P <: BoundP] = State[Seed, A]
+opaque type Gen[+A] = State[Seed, A]
 
 object Gen {
-  def apply[A, P <: BoundP](instance: Seed => (Seed, A)): Gen[A, P] = State.apply(instance)
+  def apply[A](instance: Seed => (Seed, A)): Gen[A] = State.apply(instance)
 
-  def lift[A, P <: BoundP](a: A): Gen[A, P] = State.lift(a)
+  def lift[A](a: A): Gen[A] = State.lift(a)
 
   def seed(initialValue: Long): Seed = Seed(initialValue)
 
-  def nextInt: Gen[Int, Unbounded] = Gen { _.next }
+  def nextInt: Gen[Int] = Gen { _.next }
 
-  def nextNonInt: Gen[Int, Unbounded] = nextInt.map { i =>
+  def nextNonInt: Gen[Int] = nextInt.map { i =>
     if i < 0 then -(i + 1) else i
   }
 
-  def nextDouble: Gen[Double, Unbounded] = nextNonInt.map { i =>
+  def nextDouble: Gen[Double] = nextNonInt.map { i =>
     i / (Int.MaxValue.toDouble + 1)
   }
 
-  def nextBoolean: Gen[Boolean, Unbounded] = nextInt.map { i =>
+  def nextBoolean: Gen[Boolean] = nextInt.map { i =>
     if i < 0 then false else true
   }
 
-  extension [A, P <: BoundP](self: Gen[A, P]) {
-    def map[B, P2 <: BoundP](f: A => B): Gen[B, P2] = State.map(self)(f)
-    def flatMap[B, P2 <: BoundP](f: A => Gen[B, P2]): Gen[B, P2] = State.flatMap(self)(f)
+  def nextString: Gen[String] = nextInt.map { _.toChar.toString }
+
+  extension [A](self: Gen[A]) {
+    def map[B](f: A => B): Gen[B] = State.map(self)(f)
+    def flatMap[B](f: A => Gen[B]): Gen[B] = State.flatMap(self)(f)
     def run(initialState: Seed) = State.run(self)(initialState)
   }
 }

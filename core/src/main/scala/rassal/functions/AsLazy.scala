@@ -23,5 +23,5 @@ package rassal
 package functions
 
 private[rassal] trait AsLazy[A] {
-  def asLazy[P <: BoundP](self: Gen[A, P]): Gen[LazyList[A], P]
+  def asLazy(self: Gen[A]): Gen[LazyList[A]]
 }

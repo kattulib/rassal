@@ -25,9 +25,9 @@ package instances
 import functions.{AsLazy, AsList}
 import numeric.NumericInstances
 
-private[instances] trait AllInstances extends NumericInstances with BooleanInstances {
+private[instances] trait AllInstances extends NumericInstances with BooleanInstances with StringInstances {
   given [A]: AsList[A] with {
-    def asList[P <: BoundP](self: Gen[A, P])(length: Int): Gen[List[A], P] = Gen { currentSeed =>
+    def asList(self: Gen[A])(length: Int): Gen[List[A]] = Gen { currentSeed =>
       (0 until length).foldLeft((currentSeed, List.empty[A])) { case ((runningSeed, acc), _) =>
         val (nextSeed, v) = self.run(runningSeed)
         (nextSeed, v +: acc)
@@ -36,7 +36,7 @@ private[instances] trait AllInstances extends NumericInstances with BooleanInsta
   }
 
   given [A]: AsLazy[A] with {
-    def asLazy[P <: BoundP](self: Gen[A, P]): Gen[LazyList[A], P] = Gen { currentSeed =>
+    def asLazy(self: Gen[A]): Gen[LazyList[A]] = Gen { currentSeed =>
       def loop(runningSeed: Seed): LazyList[A] = {
         val (nextSeed, value) = self.run(runningSeed)
         value #:: loop(nextSeed)

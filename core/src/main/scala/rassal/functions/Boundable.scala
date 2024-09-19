@@ -23,5 +23,5 @@ package rassal
 package functions
 
 private[rassal] trait Boundable[A] {
-  def withBounds(min: A, max: A)(self: Gen[A, Unbounded]): Gen[A, Bounded]
+  def withBounds(min: A, max: A)(self: Gen[A]): Gen[A]
 }

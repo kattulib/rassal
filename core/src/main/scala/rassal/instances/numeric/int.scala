@@ -26,8 +26,8 @@ import functions.{Boundable}
 
 private[instances] trait IntInstances {
   given Boundable[Int] with {
-    def withBounds(min: Int, max: Int)(self: Gen[Int, Unbounded]): Gen[Int, Bounded] = {
-      self.map[Int, Bounded] { Math.floorMod(_, max - min + 1) + min }
+    def withBounds(min: Int, max: Int)(self: Gen[Int]): Gen[Int] = {
+      self.map[Int] { Math.floorMod(_, max - min + 1) + min }
     }
   }
 }

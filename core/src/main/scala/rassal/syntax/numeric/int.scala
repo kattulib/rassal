@@ -26,9 +26,9 @@ import scala.annotation.targetName
 import rassal.functions.{Boundable}
 
 private[syntax] trait IntSyntax {
-  extension (self: Gen[Int, Unbounded]) {
+  extension (self: Gen[Int]) {
     @targetName("intWithBounds")
-    def withBounds(min: Int, max: Int)(using f: Boundable[Int]): Gen[Int, Bounded] = {
+    def withBounds(min: Int, max: Int)(using f: Boundable[Int]): Gen[Int] = {
       f.withBounds(min, max)(self)
     }
   }

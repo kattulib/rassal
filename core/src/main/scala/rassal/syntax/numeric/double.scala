@@ -26,16 +26,16 @@ import scala.annotation.targetName
 import rassal.functions.{Boundable}
 
 private[syntax] trait DoubleSyntax {
-  extension (self: Gen[Double, Unbounded]) {
+  extension (self: Gen[Double]) {
     @targetName("doubleWithBounds")
-    def withBounds(min: Double, max: Double)(using f: Boundable[Double]): Gen[Double, Bounded] = {
+    def withBounds(min: Double, max: Double)(using f: Boundable[Double]): Gen[Double] = {
       f.withBounds(min, max)(self)
     }
   }
 
-  extension [P <: BoundP](self: Gen[Double, P]) {
+  extension (self: Gen[Double]) {
     @targetName("doubleToFixed")
-    def toFixed(decimalPlaces: Int): Gen[Double, P] = self.map[Double, P] {
+    def toFixed(decimalPlaces: Int): Gen[Double] = self.map[Double] {
       BigDecimal(_)
         .setScale(
           decimalPlaces,

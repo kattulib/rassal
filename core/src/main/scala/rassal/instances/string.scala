@@ -20,7 +20,22 @@
  */
 
 package rassal
+package instances
 
-private[rassal] sealed trait BoundP
-private[rassal] sealed trait Unbounded extends BoundP
-private[rassal] sealed trait Bounded extends BoundP
+import functions.Boundable
+
+private[instances] trait StringInstances {
+  given Boundable[String] with {
+    def withBounds(min: String, max: String)(self: Gen[String]): Gen[String] = {
+      val minCh = min.toInt
+      val maxCh = max.toInt
+
+      self.map[String] { s =>
+        s.foldLeft("") { case (acc, ch) =>
+          val boundedCh = (ch % (maxCh - minCh) + minCh).toChar
+          acc + boundedCh
+        }
+      }
+    }
+  }
+}

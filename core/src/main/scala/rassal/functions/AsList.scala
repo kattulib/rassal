@@ -23,5 +23,5 @@ package rassal
 package functions
 
 private[rassal] trait AsList[A] {
-  def asList[P <: BoundP](self: Gen[A, P])(length: Int): Gen[List[A], P]
+  def asList(self: Gen[A])(length: Int): Gen[List[A]]
 }

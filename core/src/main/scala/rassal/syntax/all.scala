@@ -26,17 +26,17 @@ import scala.annotation.targetName
 import functions.{AsLazy, AsList}
 import numeric.NumericSyntax
 
-private[syntax] trait AllSyntax extends NumericSyntax with BooleanSyntax {
-  extension [A, P <: BoundP](self: Gen[A, P]) {
+private[syntax] trait AllSyntax extends NumericSyntax with BooleanSyntax with StringSyntax {
+  extension [A](self: Gen[A]) {
     @targetName("allAsList")
-    def asList(length: Int)(using f: AsList[A]): Gen[List[A], P] = {
+    def asList(length: Int)(using f: AsList[A]): Gen[List[A]] = {
       f.asList(self)(length)
     }
   }
 
-  extension [A, P <: BoundP](self: Gen[A, P]) {
+  extension [A](self: Gen[A]) {
     @targetName("allAsLazy")
-    def asLazy(using f: AsLazy[A]): Gen[LazyList[A], P] = {
+    def asLazy(using f: AsLazy[A]): Gen[LazyList[A]] = {
       f.asLazy(self)
     }
   }

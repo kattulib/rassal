@@ -26,7 +26,7 @@ import functions.Invertible
 
 private[instances] trait BooleanInstances {
   given Invertible[Boolean] with {
-    def invert[P <: BoundP](self: Gen[Boolean, P]): Gen[Boolean, P] = {
+    def invert(self: Gen[Boolean]): Gen[Boolean] = {
       self.map { !_ }
     }
   }

@@ -24,5 +24,5 @@ package rassal
 package object syntax {
   object all extends AllSyntax
   object boolean extends BooleanSyntax
+  object string extends StringSyntax
 }
-
