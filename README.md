@@ -102,3 +102,19 @@ idOfiTZWQdNSaPJn
 sZDRoxAnOxYIotPA
 ```
 
+or we can generate a string by template:
+```scala
+val (_, emailStr) = Gen.nextString
+  .asLike(
+    "$userName@$domain.$tld",
+    Map(
+      "$userName" -> Gen.nextString.alphanumeric.toLower.length(6),
+      "$domain" -> Gen.nextString.alpha.toLower.length(4),
+      "$tld" -> Gen.nextString.alpha.toLower.length(3)
+    )
+  )
+  .run(Gen.seed(1))
+
+// output
+hifnjc@spmo.kfn
+```
