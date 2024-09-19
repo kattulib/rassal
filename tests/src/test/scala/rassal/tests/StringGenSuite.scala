@@ -61,4 +61,10 @@ class StringGenSuite extends munit.FunSuite {
     val (_, obtained) = Gen.nextString.contains("XYZ").toLower.length(4).run(Seed(1))
     assertEquals(obtained, expected)
   }
+
+  test("random string contains [ABCDE] and excludes [AB] with length with Seed(1)") {
+    val expected = "EEDD"
+    val (_, obtained) = Gen.nextString.contains("ABCDE").exclude("AB").length(4).run(Seed(1))
+    assertEquals(obtained, expected)
+  }
 }
