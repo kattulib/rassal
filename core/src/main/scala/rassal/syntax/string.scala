@@ -102,4 +102,15 @@ private[syntax] trait StringSyntax {
       }
     }
   }
+
+  extension (self: Gen[String]) {
+    @targetName("stringAsLike")
+    def asLike(template: String, map: Map[String, Gen[String]]): Gen[String] = Gen { currentSeed =>
+      map.foldLeft((currentSeed, template)) { case ((runningSeed, acc), (k, gen)) =>
+        val (nextSeed, generatedValue) = gen.run(runningSeed)
+        val nextTemplate = acc.replace(k, generatedValue)
+        (nextSeed, nextTemplate)
+      }
+    }
+  }
 }
