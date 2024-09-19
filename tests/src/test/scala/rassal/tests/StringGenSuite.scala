@@ -67,4 +67,20 @@ class StringGenSuite extends munit.FunSuite {
     val (_, obtained) = Gen.nextString.contains("ABCDE").exclude("AB").length(4).run(Seed(1))
     assertEquals(obtained, expected)
   }
+
+  test("random string with asLike, and Seed(1)") {
+    val expected = "hifnjc@spmo.kfn"
+    val (_, obtained) = Gen.nextString
+      .asLike(
+        "$userName@$domain.$tld",
+        Map(
+          "$userName" -> Gen.nextString.alphanumeric.toLower.length(6),
+          "$domain" -> Gen.nextString.alpha.toLower.length(4),
+          "$tld" -> Gen.nextString.alpha.toLower.length(3)
+        )
+      )
+      .run(Gen.seed(1))
+
+    assertEquals(obtained, expected)
+  }
 }
