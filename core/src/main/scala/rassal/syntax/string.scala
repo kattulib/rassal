@@ -84,6 +84,16 @@ private[syntax] trait StringSyntax {
     }
   }
 
+  extension (self: Gen[String]) {
+    @targetName("stringExclude")
+    def exclude(excludeList: String): Gen[String] = {
+      self.flatMap { ch =>
+        if excludeList.contains(ch) then self.exclude(excludeList)
+        else Gen.lift(ch)
+      }
+    }
+  }
+
   extension (self: Gen[String])(using f: AsList[String]) {
     @targetName("stringLength")
     def length(value: Int): Gen[String] = {
