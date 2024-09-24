@@ -100,6 +100,7 @@ private[syntax] trait StringSyntax {
       f.asList(self)(value).map { as =>
         as.foldLeft("")(_ + _)
       }
+      f.asList(self)(value).map { _.mkString }
     }
   }
 
