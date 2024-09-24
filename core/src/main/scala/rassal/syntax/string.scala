@@ -97,9 +97,6 @@ private[syntax] trait StringSyntax {
   extension (self: Gen[String])(using f: AsList[String]) {
     @targetName("stringLength")
     def length(value: Int): Gen[String] = {
-      f.asList(self)(value).map { as =>
-        as.foldLeft("")(_ + _)
-      }
       f.asList(self)(value).map { _.mkString }
     }
   }
@@ -112,6 +109,13 @@ private[syntax] trait StringSyntax {
         val nextTemplate = acc.replace(k, generatedValue)
         (nextSeed, nextTemplate)
       }
+    }
+  }
+
+  extension (self: Gen[String])(using AsList[String])(using f: Boundable[Int]) {
+    @targetName("stringRangeLength")
+    def rangeLength(min: Int, max: Int): Gen[String] = {
+      f.withBounds(min, max)(Gen.lift(min)).flatMap(self.length)
     }
   }
 }
