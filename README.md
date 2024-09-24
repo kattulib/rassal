@@ -1,6 +1,6 @@
 # Rassal
 <p>
-    <img src="/docs/icon.jpeg" width="256" height="256" />
+    <img src="/docs/icon.png" width="256" height="256" />
 </p>
 
 Rassal is a random value generator.
