@@ -4,16 +4,16 @@ import Dependencies._
 ThisBuild / scalaVersion := "3.4.2"
 ThisBuild / name := "rassal"
 ThisBuild / version := "0.1.0-SNAPSHOT"
-ThisBuild / organization := "io.github.kattulib"
-ThisBuild / organizationName := "kattulib"
+ThisBuild / organization := "io.github.lamdalib"
+ThisBuild / organizationName := "lamdalib"
 ThisBuild / description := "Say something about this template."
 ThisBuild / licenses := List(("MIT", url("https://opensource.org/license/mit")))
 ThisBuild / startYear := Some(2024)
-ThisBuild / homepage := Some(url("https://github.com/kattulib/rassal"))
+ThisBuild / homepage := Some(url("https://github.com/lamdalib/rassal"))
 ThisBuild / scmInfo := Some(
     ScmInfo(
-        url("https://github.com/kattulib/rassal"),
-        "git@github.com:kattulib/rassal.git"
+        url("https://github.com/lamdalib/rassal"),
+        "git@github.com:lamdalib/rassal.git"
     )
 )
 

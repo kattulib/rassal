@@ -14,19 +14,19 @@ command:
 # on interactive sbt shell
 sbt:rassal> publishLocal
 ...
-[info]  published ivy to /home/USER/.ivy2/local/io.github.kattulib/rassal_3/0.1.0-SNAPSHOT
-[info]  published ivy to /home/USER/.ivy2/local/io.github.kattulib/rassal-core_3/0.1.0-SNAPSHOT
+[info]  published ivy to /home/USER/.ivy2/local/io.github.lamdalib/rassal_3/0.1.0-SNAPSHOT
+[info]  published ivy to /home/USER/.ivy2/local/io.github.lamdalib/rassal-core_3/0.1.0-SNAPSHOT
 
 # on bash
 $ sbt publishLocal
 ...
-[info]  published ivy to /home/USER/.ivy2/local/io.github.kattulib/rassal_3/0.1.0-SNAPSHOT
-[info]  published ivy to /home/USER/.ivy2/local/io.github.kattulib/rasasl-core_3/0.1.0-SNAPSHOT
+[info]  published ivy to /home/USER/.ivy2/local/io.github.lamdalib/rassal_3/0.1.0-SNAPSHOT
+[info]  published ivy to /home/USER/.ivy2/local/io.github.lamdalib/rasasl-core_3/0.1.0-SNAPSHOT
 ```
 
 Then you can add the library in the library dependencies as others.
 ```scala
-libraryDependencies += "io.github.kattulib" %% "rassal" % "0.1.0-SNAPSHOT"
+libraryDependencies += "io.github.lamdalib" %% "rassal" % "0.1.0-SNAPSHOT"
 ```
 
 ## Run Tests
