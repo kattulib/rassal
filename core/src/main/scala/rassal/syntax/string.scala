@@ -76,9 +76,14 @@ private[syntax] trait StringSyntax {
   extension (self: Gen[String])(using f: Boundable[Int]) {
     @targetName("stringContains")
     def contains(containsList: String): Gen[String] = {
-      self.flatMap { ch =>
-        f.withBounds(0, containsList.length - 1)(Gen.lift(ch(0).toInt)).map {
-          containsList(_).toString
+      self.flatMap { str =>
+        str.foldRight(Gen.lift("")) { case (ch, acc) =>
+          acc.flatMap(a => {
+            f.withBounds(0, containsList.length - 1)(Gen.lift(ch))
+              .map {
+                containsList(_).toString + a
+              }
+          })
         }
       }
     }
