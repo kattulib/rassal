@@ -50,12 +50,6 @@ class StringGenSuite extends munit.FunSuite {
     assertEquals(obtained, expected)
   }
 
-  test("random string as bounded between ['A'-'D'] with length with Seed(1)") {
-    val expected = "BBBA"
-    val (_, obtained) = Gen.nextString.withBounds("65", "69").length(4).run(Seed(1))
-    assertEquals(obtained, expected)
-  }
-
   test("random string contains [XYZ] as lowered with length with Seed(1)") {
     val expected = "yyxz"
     val (_, obtained) = Gen.nextString.contains("XYZ").toLower.length(4).run(Seed(1))

@@ -26,17 +26,11 @@ import scala.annotation.targetName
 import functions.{AsList, Boundable}
 
 private[syntax] trait StringSyntax {
-  extension (self: Gen[String]) {
-    @targetName("stringWithBounds")
-    def withBounds(min: String, max: String)(using f: Boundable[String]): Gen[String] = {
-      f.withBounds(min, max)(self)
-    }
-  }
-
-  extension (self: Gen[String])(using Boundable[String]) {
+  extension (self: Gen[String])(using Boundable[Int]) {
     @targetName("stringAscii")
     def ascii: Gen[String] = {
-      self.withBounds("32", "127")
+      val asciiChars = (' ' to '~').mkString
+      self.contains(asciiChars)
     }
   }
 
