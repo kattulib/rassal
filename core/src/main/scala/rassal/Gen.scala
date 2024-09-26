@@ -51,6 +51,6 @@ object Gen {
   extension [A](self: Gen[A]) {
     def map[B](f: A => B): Gen[B] = State.map(self)(f)
     def flatMap[B](f: A => Gen[B]): Gen[B] = State.flatMap(self)(f)
-    def run(initialState: Seed) = State.run(self)(initialState)
+    def run(initialState: Seed): (Seed, A) = State.run(self)(initialState)
   }
 }
